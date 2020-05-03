@@ -9,13 +9,18 @@ import javax.persistence.Table;
 @Table(name ="schedule_flights")
 
 public class ScheduledFlight {
+	@Id
+	
+	private int availableSeats;
+	
 	@ManyToOne
     @JoinColumn(name="flight", nullable=false)
     private Flight flight;
-	private int availableSeats;
+	
 	@ManyToOne
 	@JoinColumn(name="schedule", nullable=false)
 	private Schedule schedule;
+	
 	public Flight getFlight() {
 		return flight;
 	}

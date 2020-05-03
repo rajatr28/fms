@@ -15,19 +15,19 @@ import javax.persistence.Table;
 
 
 
-public class booking {
+public class Booking {
 	@Id
 	private long bookingId;
 	private long ticketCost;
 	private int noOfPassengers;
 	@ManyToOne
-	    @JoinColumn(name="user1", nullable=false)
-	    private User1 UserId;
+	    @JoinColumn(name="UserId", nullable=false)
+	    private User1 user1;
 	@OneToMany(mappedBy="booking")
 	    private List<Passenger> passengerList;
 	
 	@ManyToOne
-	    @JoinColumn(name="flight", nullable=false)
+	    @JoinColumn(name="flightNumber", nullable=false)
 	    private Flight flight;
 
 	public long getBookingId() {
@@ -55,11 +55,11 @@ public class booking {
 	}
 
 	public User1 getUserId() {
-		return UserId;
+		return user1;
 	}
 
-	public void setUserId(User1 userId) {
-		UserId = userId;
+	public void setUserId(User1 user1) {
+		user1 = user1;
 	}
 
 	public List<Passenger> getPassengerList() {
@@ -78,18 +78,18 @@ public class booking {
 		this.flight = flight;
 	}
 
-	public booking(long bookingId, long ticketCost, int noOfPassengers, User1 userId, List<Passenger> passengerList,
+	public Booking(long bookingId, long ticketCost, int noOfPassengers, User1 user1, List<Passenger> passengerList,
 			Flight flight) {
 		super();
 		this.bookingId = bookingId;
 		this.ticketCost = ticketCost;
 		this.noOfPassengers = noOfPassengers;
-		UserId = userId;
+		this.user1 = user1;
 		this.passengerList = passengerList;
 		this.flight = flight;
 	}
 
-	public booking() {
+	public Booking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -97,7 +97,7 @@ public class booking {
 	@Override
 	public String toString() {
 		return "booking [bookingId=" + bookingId + ", ticketCost=" + ticketCost + ", noOfPassengers=" + noOfPassengers
-				+ ", UserId=" + UserId + ", passengerList=" + passengerList + ", flight=" + flight + "]";
+				+ ", user1=" + user1 + ", passengerList=" + passengerList + ", flight=" + flight + "]";
 	}
 	
 
