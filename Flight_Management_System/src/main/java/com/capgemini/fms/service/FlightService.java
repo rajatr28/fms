@@ -2,6 +2,7 @@ package com.capgemini.fms.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -14,37 +15,40 @@ import com.capgemini.fms.entity.Flight;
 
 
 @Service
-@Transactional
+
 public class FlightService {
 	
 	@Autowired
 	private FlightDao flightDao;
-	public Flight addflight(Flight flight) {
-
-		return flightDao.save(flight);
-
-	}
 	
-	public List<Flight> retrieve(){
-		List<Flight> flights = new ArrayList<Flight>();
-		for(Flight flight : flightDao.findAll()) {
-			flights.add(flight);
-		}
-		
-		return flights;
+	@Transactional
+	public boolean addflight(Flight flight)
+	{
+		return flightDao.save(flight) !=null;
 	}
-
-	public void deleteflight(int flightNumber) {
-
+	@Transactional
+	public List<Flight> show()
+	{
+		return flightDao.findAll();
+	}
+	//@Transactional
+	//public Optional<Flight> flightdetails(Integer flightNumber)
+	//{
+		//return flightDao.findById(flightNumber);
+	//}
+	@Transactional
+	public void deleteflight(Integer flightNumber)
+	{
 		flightDao.deleteById(flightNumber);
+		
 	}
 	
-	public Flight editflight (int flightNumber) {
-		return flightDao.getOne(flightNumber);
+	@Transactional
+	public Flight updateflight(Flight flight,Integer flightNumber)
+	{
+		return flightDao.save(flight);
 	}
 	
-
 }
-
 
 
