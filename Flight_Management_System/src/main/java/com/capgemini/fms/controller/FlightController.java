@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +52,7 @@ public class FlightController {
 
 	@CrossOrigin
 	@GetMapping("/viewallflight")
-	public ResponseEntity<List<Flight>> getDiagnosticCenterlist() {
+	public ResponseEntity<List<Flight>> getFlightlist() {
 		List<Flight> flightList = flightservice.show();
 		return new ResponseEntity<List<Flight>>(flightList, HttpStatus.OK);
 	}
@@ -66,14 +67,34 @@ public class FlightController {
 			return new ResponseEntity<String>("flight is deleted", HttpStatus.OK);
 		}
 		catch (DataIntegrityViolationException ex) {
-			throw new FlightException("Center ID doesnot exists");
+			throw new FlightException("flight number  doesnot exists");
 		}
 	}
 	
+	@CrossOrigin
+	@PutMapping("/updateflight/{id}")
+	public ResponseEntity updateflight(@Valid @RequestBody Flight flight,@RequestParam Integer flightNumber,BindingResult br ) throws FlightException
+	{
+		String err = "";
+		if (br.hasErrors()) {
+			List<FieldError> errors = br.getFieldErrors();
+			for (FieldError error : errors)
+				err += error.getDefaultMessage() + "<br/>";
+			throw new FlightException(err);
+		}
+		try {
+			flightservice.updateflight(flight,flightNumber);
+			return new ResponseEntity<String>("Flight updated successfully", HttpStatus.OK);
+
+		} catch (DataIntegrityViolationException ex) {
+			throw new FlightException("flight number already exists");
+		}
+	}
 		
+	}
 		
 	
 	
 	
 
-}
+
