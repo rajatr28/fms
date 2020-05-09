@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Schedule {
 	@Id
 	private int schedule_id;
-	
 	@ManyToOne
     @JoinColumn(name="airport_code",nullable=false)
     private Airport sourceAirport;
